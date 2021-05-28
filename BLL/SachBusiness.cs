@@ -69,6 +69,12 @@ namespace BLL
         {
             return _res.GetDataNew();
         }
+
+        public List<SachModel> TimKiemSanPham(string keyWord, int? minPrice, int? maxPrice, int? pageIndex, int? pageSize, int? chude, int? nhaxuatban, bool? lowToHighPrice, bool? newestFirst, out long total)
+        {
+            var kq = _res.TimKiemTongQuat(keyWord, minPrice, maxPrice, pageIndex, pageSize, chude, nhaxuatban, lowToHighPrice, newestFirst, out total);
+            return kq;
+        }
     }
 
 }

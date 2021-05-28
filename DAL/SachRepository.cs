@@ -234,5 +234,33 @@ namespace DAL
                 throw ex;
             }
         }
+        public List<SachModel> TimKiemTongQuat(string keyWord, int? minPrice, int? maxPrice,
+           int? pageIndex, int? pageSize, int? chude, int? nhaxuatban,
+           bool? lowToHighPrice, bool? newestFirst, out long total)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TimKiemSanPham",
+                    "@MaChuDe", chude,
+                    "@MaNXB", nhaxuatban,
+                    "@KeyWord", keyWord,
+                    "@MinPrice", minPrice,
+                    "@MaxPrice", maxPrice,
+                    "@Index", pageIndex,
+                    "@Size", pageSize,
+                    "@LowToHighPrice", lowToHighPrice,
+                    "@NewestFirst", newestFirst);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<SachModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -166,5 +166,29 @@ namespace API.Controllers
         {
             return _SachBusiness.GetDataNew();
         }
+
+
+        [Route("search/result/{keyword?}/{chude?}/{nhaxuatban?}/{pageIndex?}/{pageSize?}/{min?}/{max?}/{lowToHighPrice?}/{newestFirst?}")]
+        public ResponseModel TimKiem(string keyword, int? chude, int? nhaxuatban,
+    int? pageIndex, int? pageSize, int? min, int? max, bool? lowToHighPrice, bool? newestFirst)
+        {
+            if (min > max)
+            {
+                //chuyển min thành max và max thành min vd min=260 max =250 thì:
+                min ^= max;
+                max ^= min;
+                min ^= max;
+            }
+
+            var response = new ResponseModel();
+            long total = 0;
+            response.NullableIndex = pageIndex;
+            response.NullableSize = pageSize;
+            response.Data = _SachBusiness.TimKiemSanPham(keyword, min, max, pageIndex, pageSize, chude, nhaxuatban, lowToHighPrice, newestFirst, out total);
+            response.TotalItems = total;
+            response.NullableIndex = pageIndex;
+            response.NullableSize = pageSize;
+            return response;
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace BLL
         List<SachModel> phantrang(int pageIndex, int pageSize, out long total, string tensach);
         List<SachModel> Gettuongtu(int masach);
         List<SachModel> GetDataNew();
+        List<SachModel> TimKiemSanPham(string keyWord, int? minPrice, int? maxPrice, int? pageIndex, int? pageSize, int? chude,
+        int? nhaxuatban, bool? lowToHighPrice, bool? newestFirst, out long total);
     }
 }
